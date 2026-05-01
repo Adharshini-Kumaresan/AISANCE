@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import CustomCursor from "@/components/CustomCursor";
 
 export const metadata: Metadata = {
   title: "AISANCE — Cognitive Comfort Intelligence Platform",
@@ -29,8 +30,10 @@ export default function RootLayout({
         />
       </head>
       <body style={{ background: '#050505', margin: 0, padding: 0 }}>
+        <CustomCursor />
         {children}
       </body>
     </html>
   );
 }
+

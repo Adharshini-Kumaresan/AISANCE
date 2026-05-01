@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { motion, useScroll, useSpring, AnimatePresence } from 'framer-motion';
+import WaitlistModal from '@/components/WaitlistModal';
 
 // ─── Constants ───────────────────────────────────────────────────────────────
 const FRAME_COUNT = 240;
@@ -91,9 +92,10 @@ function Loader({ progress, onComplete }: LoaderProps) {
 interface BeatTextProps {
   beat: typeof BEATS[number];
   scrollProgress: number;
+  onOpenWaitlist: () => void;
 }
 
-function BeatText({ beat, scrollProgress }: BeatTextProps) {
+function BeatText({ beat, scrollProgress, onOpenWaitlist }: BeatTextProps) {
   const range = beat.end - beat.start;
   const pad = range * 0.12;
 
@@ -149,10 +151,14 @@ function BeatText({ beat, scrollProgress }: BeatTextProps) {
           style={{ marginTop: '2.5rem', opacity }}
           initial={{ opacity: 0, y: 10 }}
         >
-          <a href="#explore" className="cta-button">
-            Explore the Intelligence
+          <button
+            onClick={onOpenWaitlist}
+            className="cta-button"
+            style={{ cursor: 'pointer', background: 'none' }}
+          >
+            Join the Waitlist
             <span className="cta-arrow">→</span>
-          </a>
+          </button>
         </motion.div>
       )}
     </div>
@@ -293,6 +299,7 @@ export default function AisanceScroll() {
   const [images, setImages] = useState<HTMLImageElement[]>([]);
   const [frameIndex, setFrameIndex] = useState(0);
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [modalOpen, setModalOpen] = useState(false);
 
   const sectionRef = useRef<HTMLDivElement>(null);
 
@@ -348,6 +355,9 @@ export default function AisanceScroll() {
 
   return (
     <>
+      {/* Waitlist modal */}
+      <WaitlistModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />
+
       {/* Noise texture */}
       <div className="noise-overlay" />
 
@@ -453,6 +463,7 @@ export default function AisanceScroll() {
                 key={beat.id}
                 beat={beat}
                 scrollProgress={scrollProgress}
+                onOpenWaitlist={() => setModalOpen(true)}
               />
             ))}
 
@@ -510,12 +521,16 @@ export default function AisanceScroll() {
               pure, engineered calm.
             </p>
 
-            <a href="#" className="cta-button">
-              Explore the Intelligence
+            <button
+              onClick={() => setModalOpen(true)}
+              className="cta-button"
+              style={{ cursor: 'pointer', background: 'none' }}
+            >
+              Join the Waitlist
               <span className="cta-arrow">→</span>
-            </a>
+            </button>
 
-            {/* Stats */}
+            {/* ── Concept triptych ─────────────────────────────────────── */}
             <motion.div
               className="stat-grid"
               initial={{ opacity: 0, y: 20 }}
@@ -523,19 +538,117 @@ export default function AisanceScroll() {
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: 0.3 }}
             >
+              {/* You */}
               <div className="stat-item">
-                <div className="stat-value">12<span style={{ fontSize: '1.2rem', color: 'var(--accent)' }}>ms</span></div>
-                <div className="stat-label">Prediction Horizon</div>
+                <div
+                  style={{
+                    fontSize: 'clamp(1.4rem, 2.5vw, 2rem)',
+                    fontWeight: 800,
+                    letterSpacing: '-0.03em',
+                    color: 'rgba(245,245,245,0.92)',
+                    lineHeight: 1,
+                    marginBottom: '0.6rem',
+                    fontFamily: 'var(--font-sans)',
+                  }}
+                >
+                  You
+                </div>
+                <div
+                  style={{
+                    fontSize: '0.65rem',
+                    letterSpacing: '0.2em',
+                    textTransform: 'uppercase',
+                    color: 'rgba(245,245,245,0.38)',
+                    fontWeight: 400,
+                    fontFamily: 'var(--font-sans)',
+                  }}
+                >
+                  Human-centered comfort
+                </div>
               </div>
+
+              {/* The Road */}
               <div className="stat-item">
-                <div className="stat-value">99<span style={{ fontSize: '1.2rem', color: 'var(--accent)' }}>%</span></div>
-                <div className="stat-label">Vibration Reduction</div>
+                <div
+                  style={{
+                    fontSize: 'clamp(1.4rem, 2.5vw, 2rem)',
+                    fontWeight: 800,
+                    letterSpacing: '-0.03em',
+                    color: 'rgba(245,245,245,0.92)',
+                    lineHeight: 1,
+                    marginBottom: '0.6rem',
+                    fontFamily: 'var(--font-sans)',
+                  }}
+                >
+                  The Road
+                </div>
+                <div
+                  style={{
+                    fontSize: '0.65rem',
+                    letterSpacing: '0.2em',
+                    textTransform: 'uppercase',
+                    color: 'rgba(245,245,245,0.38)',
+                    fontWeight: 400,
+                    fontFamily: 'var(--font-sans)',
+                  }}
+                >
+                  Real-time sensing
+                </div>
               </div>
+
+              {/* The System */}
               <div className="stat-item">
-                <div className="stat-value">0<span style={{ fontSize: '1.2rem', color: 'var(--accent)' }}>x</span></div>
-                <div className="stat-label">Road Adaptation</div>
+                <div
+                  style={{
+                    fontSize: 'clamp(1.4rem, 2.5vw, 2rem)',
+                    fontWeight: 800,
+                    letterSpacing: '-0.03em',
+                    color: 'rgba(245,245,245,0.92)',
+                    lineHeight: 1,
+                    marginBottom: '0.6rem',
+                    fontFamily: 'var(--font-sans)',
+                  }}
+                >
+                  The System
+                </div>
+                <div
+                  style={{
+                    fontSize: '0.65rem',
+                    letterSpacing: '0.2em',
+                    textTransform: 'uppercase',
+                    color: 'rgba(245,245,245,0.38)',
+                    fontWeight: 400,
+                    fontFamily: 'var(--font-sans)',
+                  }}
+                >
+                  Intelligent adaptation
+                </div>
               </div>
             </motion.div>
+
+            {/* ── Alignment tagline ─────────────────────────────────────── */}
+            <motion.p
+              initial={{ opacity: 0, y: 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.9, delay: 0.55, ease: [0.25, 0.46, 0.45, 0.94] }}
+              style={{
+                marginTop: '2rem',
+                fontFamily: 'var(--font-sans)',
+                fontSize: 'clamp(0.8rem, 1.3vw, 0.95rem)',
+                fontWeight: 300,
+                color: 'rgba(245,245,245,0.38)',
+                letterSpacing: '0.04em',
+                lineHeight: 1.7,
+                textAlign: 'center',
+              }}
+            >
+              You. The road. The system.
+              <br />
+              <span style={{ color: 'rgba(245,245,245,0.65)' }}>
+                AISANCE aligns all three.
+              </span>
+            </motion.p>
           </motion.div>
 
           {/* Footer */}

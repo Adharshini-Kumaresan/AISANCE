@@ -376,37 +376,47 @@ canvas {
   50% { opacity: 0.12; transform: scale(1.1); }
 }
 
-/* ─── Stat grid ──────────────────────────────────── */
+/* ─── Concept triptych ───────────────────────────── */
 .stat-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1px;
-  border: 1px solid rgba(255,255,255,0.06);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0;
   margin-top: 4rem;
   width: 100%;
-  max-width: 700px;
+  max-width: 860px;
+  /* No outer border — clean, open layout */
 }
 
 .stat-item {
-  padding: 2rem 1.5rem;
-  border-right: 1px solid rgba(255,255,255,0.06);
+  flex: 1;
+  padding: 3rem 2.5rem;
   text-align: center;
-}
-.stat-item:last-child { border-right: none; }
-
-.stat-value {
-  font-size: 2.5rem;
-  font-weight: 800;
-  letter-spacing: -0.04em;
-  color: var(--white);
-  line-height: 1;
+  position: relative;
 }
 
-.stat-label {
-  font-size: 0.6rem;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  font-weight: 300;
-  margin-top: 0.5rem;
+/* Subtle divider only between items, not on outer edges */
+.stat-item + .stat-item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 20%;
+  height: 60%;
+  width: 1px;
+  background: rgba(255,255,255,0.07);
+}
+
+@media (max-width: 600px) {
+  .stat-grid {
+    flex-direction: column;
+    align-items: center;
+  }
+  .stat-item + .stat-item::before {
+    display: none;
+  }
+  .stat-item {
+    padding: 2rem 1.5rem;
+    width: 100%;
+  }
 }

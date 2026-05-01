@@ -19,7 +19,7 @@ export default function TypeformSection() {
       style={{
         backgroundColor: '#050505',
         width: '100%',
-        padding: '130px 24px',
+        padding: '160px 24px',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -47,7 +47,7 @@ export default function TypeformSection() {
         initial={{ opacity: 0, y: 24 }}
         animate={sectionInView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.9, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.05 }}
-        style={{ textAlign: 'center', marginBottom: '64px', maxWidth: '600px' }}
+        style={{ textAlign: 'center', marginBottom: '96px', maxWidth: '800px', width: '100%' }}
       >
         <p
           style={{
@@ -65,13 +65,13 @@ export default function TypeformSection() {
 
         <h2
           style={{
-            fontSize: 'clamp(2rem, 5.5vw, 4rem)',
-            fontWeight: 800,
-            letterSpacing: '-0.04em',
-            lineHeight: 1.0,
-            color: 'rgba(245,245,245,0.90)',
+            fontSize: 'clamp(3rem, 7vw, 6rem)',
+            fontWeight: 900,
+            letterSpacing: '-0.05em',
+            lineHeight: 0.95,
+            color: 'rgba(245,245,245,0.92)',
             textTransform: 'uppercase',
-            marginBottom: '1.4rem',
+            marginBottom: '2.5rem',
             fontFamily: 'var(--font-sans)',
           }}
         >
@@ -82,12 +82,13 @@ export default function TypeformSection() {
 
         <p
           style={{
-            fontSize: 'clamp(0.85rem, 1.4vw, 1rem)',
+            fontSize: 'clamp(0.9rem, 1.5vw, 1.05rem)',
             fontWeight: 300,
-            color: 'rgba(245,245,245,0.50)',
-            letterSpacing: '0.02em',
-            lineHeight: 1.75,
+            color: 'rgba(245,245,245,0.45)',
+            letterSpacing: '0.03em',
+            lineHeight: 1.8,
             fontFamily: 'var(--font-sans)',
+            marginTop: '0.5rem',
           }}
         >
           Your comfort is data.
